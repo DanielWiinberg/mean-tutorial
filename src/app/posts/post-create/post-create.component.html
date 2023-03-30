@@ -1,11 +1,27 @@
 <mat-card>
-    <mat-form-field>
-        <textarea matInput rows="10" #postField>Enter you comment here.</textarea>
-    </mat-form-field>
-    <button mat-raised-button
-    color="primary"
-    (click)="onSavePost(postField)">Save post</button>
+    <form (submit)="onCreatePost(postForm)" #postForm="ngForm">
+        <mat-form-field>
+            <input 
+            matInput type="text" 
+            name="title"
+            ngModel
+            required
+            #postTitle="ngModel">
+            <mat-error *ngIf="postTitle.invalid">Please enter a title.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <textarea 
+            matInput rows="10" 
+            name="content"
+            ngModel
+            required
+            #postContent="ngModel"></textarea>
+            <mat-error *ngIf="postContent.invalid">Please enter some content.</mat-error>
+        </mat-form-field>
+        <button 
+        mat-raised-button
+        type="submit"
+        color="accent"
+        >Save post</button>
+    </form>
 </mat-card>
-
-<hr>
-<p>{{userPost}}</p>
