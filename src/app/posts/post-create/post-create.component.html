@@ -1,0 +1,11 @@
+<mat-card>
+    <mat-form-field>
+        <textarea matInput rows="10" #postField>Enter you comment here.</textarea>
+    </mat-form-field>
+    <button mat-raised-button
+    color="primary"
+    (click)="onSavePost(postField)">Save post</button>
+</mat-card>
+
+<hr>
+<p>{{userPost}}</p>
