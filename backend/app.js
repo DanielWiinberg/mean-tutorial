@@ -3,10 +3,12 @@ const bodyParser = require('body-parser');
 const app = express();
 const mongoose = require('mongoose');
 
-const postRoutes = require('./routes/posts')
+const mongoUser = require('../mongo.user');
+
+const postRoutes = require('./routes/posts');
 
 app.use(bodyParser.json());
-mongoose.connect('mongodb+srv://danielwiinberg:i3RIqnsoVOaIDsCG@mean-tutorial.4hn8qkz.mongodb.net/node-angular?retryWrites=true&w=majority')
+mongoose.connect(`mongodb+srv://${mongoUser.user}:${mongoUser.password}@mean-tutorial.4hn8qkz.mongodb.net/node-angular?retryWrites=true&w=majority`)
   .then(() => {
     console.log('Connected to database!');
   }).catch(() => {
