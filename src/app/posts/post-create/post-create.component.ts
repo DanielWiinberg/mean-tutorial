@@ -16,7 +16,8 @@ export class PostCreateComponent implements OnInit {
   private postId: string | undefined;
   post: Post;
   isLoading: boolean = false;
-  form: FormGroup
+  form: FormGroup;
+  imagePreview: string | ArrayBuffer;
 
   constructor(
     private postsService: PostsService, 
@@ -26,14 +27,18 @@ export class PostCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      'title': new FormControl(
+      title: new FormControl(
         null, 
         {validators: [Validators.required, Validators.minLength(3)]}
-        ),
-      'content': new FormControl(
+      ),
+      content: new FormControl(
         null, 
         {validators: [Validators.required]}
-        )
+      ),
+      image: new FormControl(
+        null, 
+        {validators: [Validators.required]}
+      )
     });
 
   // Built-in observable, no need to unsubscribe
@@ -75,6 +80,18 @@ export class PostCreateComponent implements OnInit {
     }
 
     this.form.reset();
+  }
+
+  public onImagePicked(event: Event){
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({image: file});
+    this.form.get('image').updateValueAndValidity();
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result;
+    };
+    reader.readAsDataURL(file);
   }
 
 }

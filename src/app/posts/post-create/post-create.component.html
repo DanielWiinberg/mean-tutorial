@@ -10,6 +10,22 @@
             <mat-error *ngIf="form.get('title').invalid">Please enter a title.</mat-error>
         </mat-form-field>
 
+        <div>
+            <button 
+            mat-stroked-button 
+            type="button" 
+            (click)="imageInput.click()">Pick Image</button>
+            <input 
+            type="file" 
+            #imageInput
+            (change)="onImagePicked($event)"
+            style="visibility: hidden;">
+        </div>
+
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+            <img [src]="imagePreview" [alt]="form.value.title">
+        </div>
+
         <mat-form-field>
             <textarea 
             matInput 
@@ -18,14 +34,6 @@
             placeholder="Post Content"></textarea>
             <mat-error *ngIf="form.get('content').invalid">Please enter some content.</mat-error>
         </mat-form-field>
-
-        <div>
-            <button 
-            mat-stroked-button 
-            type="button" 
-            (click)="imageInput.click()">Pick Image</button>
-            <input type="file" #imageInput style="visibility: hidden;">
-        </div>
 
         <button 
         mat-raised-button
