@@ -1,19 +1,24 @@
+// PACKAGES
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
 const mongoose = require('mongoose');
 
+// FILE IMPORTS
 const mongoUser = require('../mongo.user');
-
 const postRoutes = require('./routes/posts');
 
-app.use(bodyParser.json());
+const app = express();
+
 mongoose.connect(`mongodb+srv://${mongoUser.user}:${mongoUser.password}@mean-tutorial.4hn8qkz.mongodb.net/node-angular?retryWrites=true&w=majority`)
   .then(() => {
     console.log('Connected to database!');
   }).catch(() => {
     console.log('Connection to database failed!');
   });
+
+app.use(bodyParser.json());
+app.use('/images', express.static(path.join('backend/images')));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
