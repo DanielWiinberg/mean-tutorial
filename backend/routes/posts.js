@@ -79,13 +79,23 @@ router.put(
 });
 
 router.get('', (req, res, next) => {
-  Post.find()
-    .then((fetchedPosts) => {
-      res.status(200).json({
-        message: 'Posts fetched successfully',
-        posts: fetchedPosts
-      });
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const postQuery = Post.find();
+
+  if(pageSize && currentPage){
+    postQuery
+      .skip(pageSize * (currentPage - 1))
+      .limit(pageSize);
+  };
+
+  postQuery.then((fetchedPosts) => {
+    res.status(200).json({
+      message: 'Posts fetched successfully',
+      posts: fetchedPosts
     });
+  });
+
 });
 
 router.get('/:id', (req, res, next) => {
