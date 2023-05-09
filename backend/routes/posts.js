@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 
-const Post = require('../models/Post');
+const Post = require('../models/post');
 const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
@@ -37,7 +37,8 @@ router.post(
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
-    imagePath: url + '/images/' + req.file.filename
+    imagePath: url + '/images/' + req.file.filename,
+    creator: req.userData.userId
   });
 
   post.save().then(createdPost => {
@@ -79,10 +80,10 @@ router.put(
 
 router.get('', (req, res, next) => {
   Post.find()
-    .then((documents) => {
+    .then((fetchedPosts) => {
       res.status(200).json({
         message: 'Posts fetched successfully',
-        posts: documents
+        posts: fetchedPosts
       });
     });
 });

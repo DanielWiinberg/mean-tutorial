@@ -30,11 +30,13 @@ export class PostsService{
           title: post.title,
           content: post.content,
           id: post._id,
-          imagePath: post.imagePath
+          imagePath: post.imagePath,
+          creator: post.creator
         }
       })
     }))
     .subscribe((transformedPosts) => {
+      console.log(transformedPosts);
       this.posts = transformedPosts;
       this.postsUpdated.next([...this.posts])
     });

@@ -56,7 +56,7 @@ export class AuthService{
 
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expireDuration * 1000);
-          this.saveAuthData(token, expirationDate)
+          this.saveAuthData(token, expirationDate);
 
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
